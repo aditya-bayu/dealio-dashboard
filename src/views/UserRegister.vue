@@ -34,13 +34,6 @@
             <d-button pill class="btn-accent d-table mx-auto" v-on:click="register">Create Account</d-button>
 
           </d-card-body>
-          <d-card-footer class="border-top">
-            <!-- Social Icons -->
-            <ul class="auth-form__social-icons d-table mx-auto">
-              <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-              <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-            </ul>
-          </d-card-footer>
         </d-card>
 
         <!-- Meta -->
@@ -100,7 +93,7 @@ export default {
           this.axios.post(address + ':3000/register-user', postObj)
           .then((response) => {
             if(response.status == 200) {
-              this.$router.push('/login');
+              this.$router.push('/user-register-success');
             }
           });
         }

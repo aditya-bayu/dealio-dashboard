@@ -213,6 +213,11 @@ export default new Router({
       component: () => import('./views/UserRegister.vue'),
     },
     {
+      path: '/user-register-success/',
+      name: 'user-register-success',
+      component: () => import('./views/UserRegisterSuccess.vue'),
+    },
+    {
       path: '/ecommerce',
       name: 'ecommerce',
       component: OnlineStore,

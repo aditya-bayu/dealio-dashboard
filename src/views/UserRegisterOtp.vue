@@ -18,15 +18,6 @@
             <d-button pill class="btn-accent d-table mx-auto" v-on:click="register">Create Account</d-button>
 
           </d-card-body>
-          <d-card-footer class="border-top">
-            <!-- Social Icons -->
-            <ul class="auth-form__social-icons d-table mx-auto">
-              <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-              <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-              <li><a href="#"><i class="fab fa-github"></i></a></li>
-              <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-            </ul>
-          </d-card-footer>
         </d-card>
       </d-col>
     </d-row>
