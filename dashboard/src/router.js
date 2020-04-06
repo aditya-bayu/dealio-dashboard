@@ -218,6 +218,11 @@ export default new Router({
       component: () => import('./views/UserRegisterSuccess.vue'),
     },
     {
+      path: '/test-image/',
+      name: 'test-image',
+      component: () => import('./views/TestImage.vue'),
+    },
+    {
       path: '/ecommerce',
       name: 'ecommerce',
       component: OnlineStore,

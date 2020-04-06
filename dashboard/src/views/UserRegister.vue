@@ -61,6 +61,8 @@ export default {
   },
   data(){
       return{
+        regis_method: "",
+        regis_method_id: "",
         input:{
           phone_number: "",
           password: "",
@@ -71,15 +73,34 @@ export default {
       }
   },
   created: function() {
+    this.checkRegisMethod();
     this.fetchOnePhoneRegis();
-    //if google, fetch from user_google
+    this.fetchUserData();
   },
   methods: {
+    checkRegisMethod() {
+      if(this.$route.params.method.includes("_")) {
+        this.regis_method = this.$route.params.method.split("_")[0];
+        this.regis_method_id = this.$route.params.method.split("_")[1];
+      }
+      else {
+        this.regis_method = this.$route.params.method;
+      }
+    },
     fetchOnePhoneRegis() {
       var id = this.$route.params.id;
       this.axios.get(address + ":3000/get-one-phone-regis", {params: {id: id}}).then((response) => {
         this.input.phone_number = response.data[0].phone_number;
       });
+    },
+    fetchUserData() {
+      if(this.regis_method == 'google') {
+        var id = this.regis_method_id;
+        this.axios.get(address + ":3000/get-user-google", {params: {id: id}}).then((response) => {
+          this.input.name = response.data[0].full_name;
+          this.input.email = response.data[0].email;
+        });
+      }
     },
     register() {
       if(this.input.phone_number != "" && this.input.password != "" && this.input.confirm_password != "" && this.input.email != "" && this.input.name != "") {
@@ -88,7 +109,8 @@ export default {
             phone_number: this.input.phone_number,
             name: this.input.name,
             email: this.input.email,
-            password: this.input.password
+            password: this.input.password,
+            login_method: this.regis_method
           };
           this.axios.post(address + ':3000/register-user', postObj)
           .then((response) => {
