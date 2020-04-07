@@ -13,11 +13,6 @@
                       <label>Name</label>
                       <d-input type="text" id="name" v-model="input.name" />
                     </d-col>
-
-                    <d-col md="6" class="form-group">
-                      <label>Category</label>
-                      <d-input type="text" v-model="input.category_id" />
-                    </d-col>
                   </d-form-row>
                 </d-col>
                 <d-col lg="4">
@@ -61,7 +56,6 @@ export default {
       temp_image: "",
       input: {
         name: "",
-        category_id: "",
         image: "",
       }
     };
@@ -76,7 +70,6 @@ export default {
     addMerchant() {
       let postObj = {
         name: this.input.name,
-        category_id: this.input.category_id,
         image: this.input.image
       };
       this.axios.post(address + ':3000/add-merchant', postObj, headers)
@@ -104,7 +97,6 @@ export default {
           let postObj = {
             id: id,
             name: this.input.name,
-            category_id: this.input.category_id,
             image: this.input.image
           };
           this.axios.post(address + ':3000/edit-merchant', postObj, headers)

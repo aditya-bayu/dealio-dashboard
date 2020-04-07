@@ -67,6 +67,15 @@
                       </d-form-select>
                     </d-col>
 
+                    <d-col md="6" class="form-group">
+                      <label>Category</label>
+                      <d-form-select v-model="input.category_id">
+                        <option v-for="c in category" :value="c.id">
+                          {{c.name}}
+                        </option>
+                      </d-form-select>
+                    </d-col>
+
                     <d-col md="8" class="form-group">
                       <label>Description</label>
                       <textarea v-model="input.description"
@@ -82,6 +91,21 @@
                     <d-col v-if="campaign_type != 'win' && campaign_type != 'product-deals'" md="6" class="form-group">
                       <label>Action Link</label>
                       <d-input type="text" v-model="input.action_link" />
+                    </d-col>
+
+                    <d-col md="6" class="form-group">
+                      <label>Campaign Type</label>
+                      <d-form-select v-model="input.type">
+                        <option value="online">Online</option>
+                        <option value="offline">Offline</option>
+                      </d-form-select>
+                    </d-col>
+
+                    <d-col v-if="campaign_type == 'deals' || campaign_type == 'product-deals'" md="7" class="form-group">
+                      <label>Hot Deals</label>
+                      <div>
+                        <d-checkbox inline v-model="input.hot_deals" toggle></d-checkbox>
+                      </div>
                     </d-col>
                   </d-form-row>
                 </d-col>
@@ -145,6 +169,7 @@ export default {
       temp_banner: "",
       audience: [],
       merchant: [],
+      category: [],
       input: {
         name: "",
         merchant_id: 0,
@@ -153,11 +178,15 @@ export default {
         price: 0,
         discount: 0,
         audience_id: "",
+        category_id: "",
         description: "",
+        type: "",
+        hot_deals: 0,
         action: "",
         action_link: "",
         point_redeem: 0,
-        image: ""
+        image: "",
+        banner: "",
       }
     };
   },
@@ -167,6 +196,7 @@ export default {
     this.campaign_type = this.$route.name.split("add-")[1];
     this.fetchAudience();
     this.fetchMerchant();
+    this.fetchCategory();
   },
 
   methods: {
@@ -184,6 +214,13 @@ export default {
         }
       });
     },
+    fetchCategory() {
+      this.axios.get(address + ":3000/get-category", headers).then((response) => {
+        for(var i = 0; i < response.data.length; i++) {
+          this.category.push(response.data[i]);
+        }
+      });
+    },
     addCampaign() {
       let currentdate = new Date();
       let day = currentdate.getDate();
@@ -196,6 +233,13 @@ export default {
       let dateformat = year + '-' + month + '-' + day;
       let timeformat = hour + ':' + minute + ':' + second;
 
+      if(this.input.hot_deals == true) {
+        this.input.hot_deals = 1;
+      }
+      else {
+        this.input.hot_deals = 0;
+      }
+
       let postObj = {
         name: this.input.name,
         merchant_id: this.input.merchant_id,
@@ -204,7 +248,10 @@ export default {
         price: this.input.price,
         discount: this.input.discount,
         audience_id: this.input.audience_id,
+        category_id: this.input.category_id,
         description: this.input.description,
+        type: this.input.type,
+        hot_deals: this.input.hot_deals,
         action: this.input.action,
         action_link: this.input.action_link,
         point_redeem: this.input.point_redeem,
@@ -249,7 +296,10 @@ export default {
             price: this.input.price,
             discount: this.input.discount,
             audience_id: this.input.audience_id,
+            category_id: this.input.category_id,
             description: this.input.description,
+            type: this.input.type,
+            hot_deals: this.input.hot_deals,
             action: this.input.action,
             action_link: this.input.action_link,
             point_redeem: this.input.point_redeem,
@@ -279,7 +329,10 @@ export default {
               price: this.input.price,
               discount: this.input.discount,
               audience_id: this.input.audience_id,
+              category_id: this.input.category_id,
               description: this.input.description,
+              type: this.input.type,
+              hot_deals: this.input.hot_deals,
               action: this.input.action,
               action_link: this.input.action_link,
               point_redeem: this.input.point_redeem,

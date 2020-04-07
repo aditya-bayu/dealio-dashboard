@@ -67,6 +67,15 @@
                       </d-form-select>
                     </d-col>
 
+                    <d-col md="6" class="form-group">
+                      <label>Category</label>
+                      <d-form-select v-model="input.category_id">
+                        <option v-for="c in category" :value="c.id">
+                          {{c.name}}
+                        </option>
+                      </d-form-select>
+                    </d-col>
+
                     <d-col md="8" class="form-group">
                       <label>Description</label>
                       <textarea v-model="input.description"
@@ -83,6 +92,21 @@
                       <label>Action Link</label>
                       <d-input type="text" v-model="input.action_link" />
                     </d-col>
+
+                    <d-col md="6" class="form-group">
+                      <label>Campaign Type</label>
+                      <d-form-select v-model="input.type">
+                        <option value="online">Online</option>
+                        <option value="offline">Offline</option>
+                      </d-form-select>
+                    </d-col>
+
+                    <d-col v-if="campaign_type == 'deals' || campaign_type == 'product-deals'" md="7" class="form-group">
+                      <label>Hot Deals</label>
+                      <div>
+                        <d-checkbox inline v-model="input.hot_deals" toggle></d-checkbox>
+                      </div>
+                    </d-col>
                   </d-form-row>
                 </d-col>
 
@@ -91,7 +115,7 @@
                   <div v-if="campaign_type == 'deals' || campaign_type == 'product-deals'">
                     <label class="text-center w-100 mb-4">Square Image</label>
                     <div class="edit-user-details__avatar m-auto">
-                      <img class="img-responsive" v-if="input.image != 'undefined' && input.image" :src="getImage(input.image)" >
+                      <img class="img-responsive" v-if="input.image != 'undefined' && input.image != 'null' && input.image" :src="getImage(input.image)" >
                       <img class="img-responsive" v-else :src="getImage('undefined.png')" >
                       <label class="edit-user-details__avatar__change">
                                   <i class="material-icons mr-1">&#xE439;</i>
@@ -105,7 +129,7 @@
                     <!-- Landscape Image -->
                     <label class="text-center w-100 mb-4">Landscape Image</label>
                     <div class="edit-user-details__avatar m-auto">
-                      <img class="img-responsive" v-if="input.banner != 'undefined' && input.banner" :src="getImage(input.banner)" >
+                      <img class="img-responsive" v-if="input.banner != 'undefined' && input.banner != 'null' && input.banner" :src="getImage(input.banner)" >
                       <img class="img-responsive" v-else :src="getImage('undefined.png')" >
                       <label class="edit-user-details__avatar__change">
                                   <i class="material-icons mr-1">&#xE439;</i>
@@ -148,6 +172,7 @@ export default {
       temp_banner: "",
       audience: [],
       merchant: [],
+      category: [],
       input: {
         name: "",
         merchant_id: 0,
@@ -156,7 +181,10 @@ export default {
         price: 0,
         discount: 0,
         audience_id: "",
+        category_id: "",
         description: "",
+        type: "",
+        hot_deals: 0,
         action: "",
         action_link: "",
         point_redeem: 0,
@@ -172,6 +200,7 @@ export default {
     this.getOneCampaign();
     this.fetchAudience();
     this.fetchMerchant();
+    this.fetchCategory();
   },
 
   methods: {
@@ -185,12 +214,21 @@ export default {
         this.input.price = response.data[0].price;
         this.input.discount = response.data[0].discount;
         this.input.audience_id = response.data[0].audience_id;
+        this.input.category_id = response.data[0].category_id;
         this.input.description = response.data[0].description;
+        this.input.type = response.data[0].type;
+        this.input.hot_deals = response.data[0].hot_deals;
         this.input.action = response.data[0].action;
         this.input.action_link = response.data[0].action_link;
         this.input.point_redeem = response.data[0].point_redeem;
         this.input.image = response.data[0].image;
         this.input.banner = response.data[0].banner;
+        if(this.input.hot_deals == 1) {
+          this.input.hot_deals = true;
+        }
+        else {
+          this.input.hot_deals = false;
+        }
       });
     },
     fetchAudience() {
@@ -204,6 +242,13 @@ export default {
       this.axios.get(address + ":3000/get-merchant", headers).then((response) => {
         for(var i = 0; i < response.data.length; i++) {
           this.merchant.push(response.data[i]);
+        }
+      });
+    },
+    fetchCategory() {
+      this.axios.get(address + ":3000/get-category", headers).then((response) => {
+        for(var i = 0; i < response.data.length; i++) {
+          this.category.push(response.data[i]);
         }
       });
     },
@@ -226,7 +271,10 @@ export default {
         price: this.input.price,
         discount: this.input.discount,
         audience_id: this.input.audience_id,
+        category_id: this.input.category_id,
         description: this.input.description,
+        type: this.input.type,
+        hot_deals: this.input.hot_deals,
         action: this.input.action,
         action_link: this.input.action_link,
         point_redeem: this.input.point_redeem,

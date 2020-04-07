@@ -63,7 +63,7 @@
                   <div>
                     <label class="text-center w-100 mb-4">Square Image</label>
                     <div class="edit-user-details__avatar m-auto">
-                      <img class="img-responsive" v-if="input.image != 'undefined' && input.image" :src="getImage(input.image)" >
+                      <img class="img-responsive" v-if="input.image != 'undefined' && input.image != 'null' && input.image" :src="getImage(input.image)" >
                       <img class="img-responsive" v-else :src="getImage('undefined.png')" >
                       <label class="edit-user-details__avatar__change">
                                   <i class="material-icons mr-1">&#xE439;</i>
@@ -77,7 +77,7 @@
                     <!-- Landscape Image -->
                     <label class="text-center w-100 mb-4">Landscape Image</label>
                     <div class="edit-user-details__avatar m-auto">
-                      <img class="img-responsive" v-if="input.banner != 'undefined' && input.banner" :src="getImage(input.banner)" >
+                      <img class="img-responsive" v-if="input.banner != 'undefined' && input.banner != 'null' && input.banner" :src="getImage(input.banner)" >
                       <img class="img-responsive" v-else :src="getImage('undefined.png')" >
                       <label class="edit-user-details__avatar__change">
                                   <i class="material-icons mr-1">&#xE439;</i>
