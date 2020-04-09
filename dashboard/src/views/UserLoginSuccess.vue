@@ -4,8 +4,8 @@
     <div class="error">
       <div class="error__content">
         <h2>Hi</h2>
-        <h3>You have successfully registered</h3>
-        <p>Thanks for registering. Click <d-link to="/user-login">here</d-link> to login</p>
+        <h3>You have successfully logged in</h3>
+        <p>Thanks for logging in :)</p>
       </div>
     </div>
   </d-container>

@@ -51,7 +51,7 @@
   </d-navbar-nav>
   <d-navbar-nav class="flex-row" v-else>
     <li class="nav-item dropdown" style="display: flex; align-items: center">
-      <d-link to="/login">
+      <d-link to="/user-login">
         <d-button size="sm" class="btn-accent ml-auto d-table mr-3">
           Login
         </d-button>

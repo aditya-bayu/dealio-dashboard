@@ -84,7 +84,7 @@ export default {
             this.axios.post(address + ':3000/register-admin', postObj)
             .then((response) => {
               if(response.status == 200) {
-                this.$router.push('/login');
+                this.$router.push('/login-admin');
               }
             });
           }

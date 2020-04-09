@@ -218,6 +218,36 @@ export default new Router({
       component: () => import('./views/UserRegisterSuccess.vue'),
     },
     {
+      path: '/user-login/',
+      name: 'user-login',
+      component: () => import('./views/UserLogin.vue'),
+    },
+    {
+      path: '/user-login-success/',
+      name: 'user-login-success',
+      component: () => import('./views/UserLoginSuccess.vue'),
+    },
+    {
+      path: '/user-forget-password-phone/',
+      name: 'user-forget-password-phone',
+      component: () => import('./views/UserForgetPasswordPhone.vue'),
+    },
+    {
+      path: '/user-forget-password-otp/:id',
+      name: 'user-forget-password-otp',
+      component: () => import('./views/UserForgetPasswordOtp.vue'),
+    },
+    {
+      path: '/user-forget-password/:id',
+      name: 'user-forget-password',
+      component: () => import('./views/UserForgetPassword.vue'),
+    },
+    {
+      path: '/user-forget-password-success/',
+      name: 'user-forget-password-success',
+      component: () => import('./views/UserForgetPasswordSuccess.vue'),
+    },
+    {
       path: '/test-image/',
       name: 'test-image',
       component: () => import('./views/TestImage.vue'),
@@ -248,8 +278,8 @@ export default new Router({
       component: EditUserProfile,
     },
     {
-      path: '/login',
-      name: 'login',
+      path: '/login-admin',
+      name: 'login-admin',
       meta: { layout: 'icon-sidebar' },
       component: Login,
     },

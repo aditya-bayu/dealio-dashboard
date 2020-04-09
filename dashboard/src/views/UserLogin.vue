@@ -12,8 +12,8 @@
 
             <!-- Form Fields -->
             <div class="form-group">
-              <label for="username">Username</label>
-              <input class="form-control" type="username" v-model='input.username' v-on:keyup.enter="login" placeholder="Enter username" />
+              <label for="phone_number">Phone Number</label>
+              <input class="form-control" type="text" v-model='input.phone_number' v-on:keyup.enter="login" placeholder="Enter Phone Number" />
             </div>
             <div class="form-group">
               <label for="password">Password</label>
@@ -22,26 +22,13 @@
             <div class="form-group mb-3 d-table mx-auto">
               <d-button pill class="btn-accent d-table mx-auto" v-on:click="login">Access Account</d-button>
             </div>
-            <div class="form-group mb-3 d-table mx-auto">
-              <d-link to="/register">Doesn't have an account yet?</d-link>
-            </div>
           </d-card-body>
-
-          <!-- Social Icons -->
-          <d-card-footer class="border-top">
-            <ul class="auth-form__social-icons d-table mx-auto">
-              <li><a href="#"><i class="fab fa-facebook-f"></i></a></li>
-              <li><a href="#"><i class="fab fa-twitter"></i></a></li>
-              <li><a href="#"><i class="fab fa-github"></i></a></li>
-              <li><a href="#"><i class="fab fa-google-plus-g"></i></a></li>
-            </ul>
-          </d-card-footer>
         </d-card>
 
         <!-- Meta Details -->
         <div class="auth-form__meta d-flex mt-4">
-          <d-link tag="a" to="forgot-password">Forgot your password?</d-link>
-          <d-link tag="a" to="register" class="ml-auto">Create a new account?</d-link>
+          <d-link tag="a" to="/user-forget-password-phone">Forgot your password?</d-link>
+          <d-link tag="a" to="/user-register-phone/manual" class="ml-auto">Create a new account?</d-link>
         </div>
       </d-col>
     </d-row>
@@ -64,33 +51,33 @@ export default {
   data(){
       return {
         input: {
-          username: "",
+          phone_number: "",
           password: ""
         }
       }
   },
   methods: {
     login() {
-      if(this.input.username != "" && this.input.password != "") {
-        if(!this.input.username.includes('"') && !this.input.password.includes('"') &&
-          !this.input.username.includes("'") && !this.input.password.includes("'") &&
-          !this.input.username.includes('/') && !this.input.password.includes('/') &&
-          !this.input.username.includes('\\') && !this.input.password.includes('\\')) {
-          this.axios.post(address + ':3000/login-admin', {
-            username: this.input.username,
+      if(this.input.phone_number != "" && this.input.password != "") {
+        if(!this.input.phone_number.includes('"') && !this.input.password.includes('"') &&
+          !this.input.phone_number.includes("'") && !this.input.password.includes("'") &&
+          !this.input.phone_number.includes('/') && !this.input.password.includes('/') &&
+          !this.input.phone_number.includes('\\') && !this.input.password.includes('\\')) {
+          this.axios.post(address + ':3000/login-user', {
+            phone_number: this.input.phone_number,
             password: this.input.password
           })
           .then((response) => {
             if(response.data.token) {
-              this.$session.start();
-              this.$session.set('user', response.data.response);
-              document.cookie = "token=" + response.data.token;
-              document.cookie = "user_session=" + this.$session.get('user').id;
-              localStorage.setItem('user_session', this.$session.get('user'));
-              this.$router.push('/');
+              // this.$session.start();
+              // this.$session.set('user', response.data.response);
+              // document.cookie = "token=" + response.data.token;
+              // document.cookie = "user_session=" + this.$session.get('user').id;
+              // localStorage.setItem('user_session', this.$session.get('user'));
+              this.$router.push('/user-login-success');
             }
             else {
-              alert("Incorrect combination of username and password");
+              alert("Incorrect combination of phone number and password");
             }
           });
         }

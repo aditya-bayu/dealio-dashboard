@@ -49,12 +49,12 @@ Vue.use(VueSession, options);
 Vue.use(VueGoodTablePlugin);
 
 router.beforeEach((to, from, next) => {
-	if(to.path != '/login' && to.path != '/register' && to.path.split('-')[0] != '/user') {
+	if(to.path != '/user-login' && to.path.split('-')[0] != '/user') {
 		if(localStorage.getItem('user_session')) {
 			next();
 		}
 		else {
-			next('/login');
+			next('/user-login');
 		}
 	}
 	else {
